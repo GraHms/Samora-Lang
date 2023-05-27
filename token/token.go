@@ -21,6 +21,9 @@ const (
 	ASTERISK = "*"
 	SLASH    = "/"
 
+	LT = "<"
+	GT = ">"
+
 	//	 delimiters
 	COMMA     = ","
 	SEMICOLON = ";"
