@@ -11,7 +11,9 @@ func TestNextToken(t *testing.T) {
 			  let add = fn(x, y) {
   				  x + y;
                   };
-	          let result = add(five, ten);`
+	          let result = add(five, ten);
+              !-/*5;
+              5 < 10 > 5;`
 	tests := []struct {
 		expectedType    token.TokenType
 		expectedLiteral string
