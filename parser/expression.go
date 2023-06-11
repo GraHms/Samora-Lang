@@ -1,8 +1,8 @@
 package parser
 
 import (
-	"latin/ast"
-	"latin/token"
+	"github.com/grahms/samoralang/ast"
+	"github.com/grahms/samoralang/token"
 )
 
 const (

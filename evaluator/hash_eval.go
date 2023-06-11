@@ -1,8 +1,8 @@
 package evaluator
 
 import (
-	"latin/ast"
-	"latin/object"
+	"github.com/grahms/samoralang/ast"
+	"github.com/grahms/samoralang/object"
 )
 
 func evalHashLiteral(node *ast.HashLiteral, env *object.Environment) object.Object {

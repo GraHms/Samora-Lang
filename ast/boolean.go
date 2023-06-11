@@ -1,6 +1,6 @@
 package ast
 
-import "latin/token"
+import "github.com/grahms/samoralang/token"
 
 type Boolean struct {
 	Token token.Token

@@ -1,7 +1,7 @@
 package parser
 
 import (
-	"latin/ast"
+	"github.com/grahms/samoralang/ast"
 	"strconv"
 )
 

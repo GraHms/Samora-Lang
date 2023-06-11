@@ -1,8 +1,8 @@
 package evaluator
 
 import (
-	"latin/ast"
-	"latin/object"
+	"github.com/grahms/samoralang/ast"
+	"github.com/grahms/samoralang/object"
 )
 
 var (

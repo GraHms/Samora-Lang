@@ -2,8 +2,8 @@ package parser
 
 import (
 	"fmt"
-	"latin/ast"
-	"latin/lexer"
+	"github.com/grahms/samoralang/ast"
+	"github.com/grahms/samoralang/lexer"
 	"testing"
 )
 

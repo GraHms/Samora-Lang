@@ -1,9 +1,9 @@
 package parser
 
 import (
-	"latin/ast"
-	"latin/lexer"
-	"latin/token"
+	"github.com/grahms/samoralang/ast"
+	"github.com/grahms/samoralang/lexer"
+	"github.com/grahms/samoralang/token"
 )
 
 type Parser struct {

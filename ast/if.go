@@ -2,7 +2,7 @@ package ast
 
 import (
 	"bytes"
-	"latin/token"
+	"github.com/grahms/samoralang/token"
 )
 
 type IfExpression struct {

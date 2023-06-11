@@ -3,11 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/grahms/samoralang/evaluator"
+	"github.com/grahms/samoralang/lexer"
+	"github.com/grahms/samoralang/object"
+	"github.com/grahms/samoralang/parser"
 	"io"
-	"latin/evaluator"
-	"latin/lexer"
-	"latin/object"
-	"latin/parser"
 	"os"
 )
 

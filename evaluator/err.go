@@ -2,7 +2,7 @@ package evaluator
 
 import (
 	"fmt"
-	"latin/object"
+	"github.com/grahms/samoralang/object"
 )
 
 func newError(format string, a ...interface{}) *object.Error {

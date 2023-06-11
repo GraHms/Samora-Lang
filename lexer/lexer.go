@@ -1,6 +1,6 @@
 package lexer
 
-import "latin/token"
+import "github.com/grahms/samoralang/token"
 
 type Lexer struct {
 	input        string

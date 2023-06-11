@@ -1,6 +1,6 @@
 package ast
 
-import "latin/token"
+import "github.com/grahms/samoralang/token"
 
 type StringLiteral struct {
 	Token token.Token // the token.STRING token

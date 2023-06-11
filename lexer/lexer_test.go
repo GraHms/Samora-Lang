@@ -1,7 +1,7 @@
 package lexer
 
 import (
-	"latin/token"
+	"github.com/grahms/samoralang/token"
 	"testing"
 )
 

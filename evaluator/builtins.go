@@ -1,6 +1,6 @@
 package evaluator
 
-import "latin/object"
+import "github.com/grahms/samoralang/object"
 
 var builtins = map[string]*object.Builtin{
 	"len": {Fn: func(args ...object.Object) object.Object {

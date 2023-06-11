@@ -1,9 +1,9 @@
 package evaluator
 
 import (
-	"latin/lexer"
-	"latin/object"
-	"latin/parser"
+	"github.com/grahms/samoralang/lexer"
+	"github.com/grahms/samoralang/object"
+	"github.com/grahms/samoralang/parser"
 	"testing"
 )
 

@@ -3,8 +3,8 @@ package object
 import (
 	"bytes"
 	"fmt"
+	"github.com/grahms/samoralang/ast"
 	"hash/fnv"
-	"latin/ast"
 	"strings"
 )
 

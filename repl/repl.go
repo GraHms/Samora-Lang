@@ -3,11 +3,11 @@ package repl
 import (
 	"bufio"
 	"fmt"
+	"github.com/grahms/samoralang/evaluator"
+	"github.com/grahms/samoralang/lexer"
+	"github.com/grahms/samoralang/object"
+	"github.com/grahms/samoralang/parser"
 	"io"
-	"latin/evaluator"
-	"latin/lexer"
-	"latin/object"
-	"latin/parser"
 )
 
 const PROMPT = ">> "
