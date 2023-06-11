@@ -47,6 +47,7 @@ const (
 	RETURN   = "RETURN"
 
 	STRING = "STRING"
+	COLON  = ":"
 )
 
 var keywords = map[string]TokenType{
