@@ -8,3 +8,4 @@ let factorial = fn(n) {
 
 let result = factorial(5);
 print("The factorial of 5 is: ", result);
+
