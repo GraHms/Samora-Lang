@@ -6,6 +6,7 @@ import (
 	"io"
 	"latin/evaluator"
 	"latin/lexer"
+	"latin/object"
 	"latin/parser"
 )
 
@@ -17,6 +18,7 @@ func Start(in io.Reader, out io.Writer) {
 	for {
 		fmt.Printf(PROMPT)
 		scanned := scanner.Scan()
+		env := object.NewEnvironment()
 		if !scanned {
 			return
 		}
@@ -28,7 +30,7 @@ func Start(in io.Reader, out io.Writer) {
 			printParserErrors(out, p.Errors())
 			continue
 		}
-		evaluated := evaluator.Eval(program)
+		evaluated := evaluator.Eval(program, env)
 		if evaluated != nil {
 			_, _ = io.WriteString(out, evaluated.Inspect())
 			_, _ = io.WriteString(out, "\n")
