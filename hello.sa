@@ -1,26 +1,10 @@
-let name = "Ismael";
-let greeting = fn(name) {
-    print("Olá, "+ name);
+let factorial = fn(n) {
+  if (n == 0) {
+    1;
+  } else {
+    n * factorial(n - 1);
+  }
 };
 
-let fullName = fn(first, last) {
-    first + " " + last;
-};
-
-let isAdult = fn(age) {
-    if (age > 18) {
-        true;
-    } else {
-        false;
-    }
-};
-
-let grantAccess = fn(age, fullName) {
-    if (isAdult(age)) {
-        print("Bem vindo, " + fullName);
-    } else {
-        print("Acesso negado");
-    }
-};
-let age = 19;
-grantAccess(age, fullName("Ismael", "GraHms"));
+let result = factorial(5);
+print("The factorial of 5 is: ", result);
