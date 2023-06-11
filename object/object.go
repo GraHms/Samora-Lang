@@ -3,11 +3,15 @@ package object
 import (
 	"bytes"
 	"fmt"
+	"hash/fnv"
 	"latin/ast"
 	"strings"
 )
 
 type ObjectType string
+type Hashable interface {
+	HashKey() HashKey
+}
 
 const (
 	INTEGER_OBJ      = "INTEGER"
@@ -19,6 +23,7 @@ const (
 	STRING_OBJ       = "STRING"
 	BUILTIN_OBJ      = "BUILTIN"
 	ARRAY_OBJ        = "ARRAY"
+	HASH_OBJ         = "HASH"
 )
 
 type Object interface {
@@ -106,16 +111,21 @@ func (a *Array) Inspect() string {
 	return out.String()
 }
 
-type Hash struct {
-	Pairs map[Object]Object
+type HashPair struct {
+	Key   Object
+	Value Object
 }
 
-func (h *Hash) Type() ObjectType { return ARRAY_OBJ }
+type Hash struct {
+	Pairs map[HashKey]HashPair
+}
+
+func (h *Hash) Type() ObjectType { return HASH_OBJ }
 func (h *Hash) Inspect() string {
 	var out bytes.Buffer
 	pairs := []string{}
-	for k, v := range h.Pairs {
-		pairs = append(pairs, k.Inspect()+":"+v.Inspect())
+	for _, pair := range h.Pairs {
+		pairs = append(pairs, fmt.Sprintf("%s:%s", pair.Key.Inspect(), pair.Value.Inspect()))
 	}
 	out.WriteString("{")
 	out.WriteString((strings.Join(pairs, ", ")))
@@ -132,6 +142,8 @@ func (b *Boolean) HashKey() HashKey {
 	var value uint64
 	if b.Value {
 		value = 1
+	} else {
+		value = 0
 	}
 	return HashKey{Type: b.Type(), Value: value}
 }
@@ -141,9 +153,8 @@ func (i *Integer) HashKey() HashKey {
 }
 
 func (s *String) HashKey() HashKey {
-	var h uint64
-	for _, c := range s.Value {
-		h += uint64(c)
-	}
-	return HashKey{Type: s.Type(), Value: h}
+	h := fnv.New64a()
+	_, _ = h.Write([]byte(s.Value))
+
+	return HashKey{Type: s.Type(), Value: h.Sum64()}
 }
