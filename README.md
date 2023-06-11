@@ -91,6 +91,13 @@ print(person["name"]);
 
 In this example, a hash `person` is created with keys `"name"` and `"age"`. The value corresponding to the key `"name"` is accessed and printed.
 
+### Map and Reduce Example
+    ```sml
+    let numbers = [1, 2, 3, 4, 5];
+    let squared = map(numbers, fn(x) { x * x });
+    let sum = reduce(squared, fn(acc, x) { acc + x }, 0);
+    print("The sum of squared numbers is: ", sum);
+    ```
 ## Contributing
 
 Contributions to Samora Lang are welcome! If you find any issues, have ideas for improvements, or would like to add new features, please open an issue or submit a pull request on the official Samora Lang GitHub repository.

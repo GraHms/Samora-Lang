@@ -1,11 +1,4 @@
-let factorial = fn(n) {
-  if (n == 0) {
-    1;
-  } else {
-    n * factorial(n - 1);
-  }
-};
-
-let result = factorial(5);
-print("The factorial of 5 is: ", result);
-
+let numbers = [1, 2, 3, 4, 5];
+let squared = map(numbers, fn(x) { x * x });
+let sum = reduce(squared, fn(acc, x) { acc + x }, 0);
+print("The sum of squared numbers is: ", sum);
