@@ -35,6 +35,7 @@ func Start(in io.Reader, out io.Writer) {
 
 func printParserErrors(out io.Writer, errors []string) {
 	for _, msg := range errors {
+
 		_, _ = io.WriteString(out, "\t"+msg+"\n")
 	}
 }
