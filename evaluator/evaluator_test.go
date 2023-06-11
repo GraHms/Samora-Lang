@@ -232,3 +232,28 @@ func TestFunctionApplication(t *testing.T) {
 		testIntegerObject(t, testEval(tt.input), tt.expected)
 	}
 }
+
+func TestClosures(t *testing.T) {
+	input := `
+	let newAdder = fn(x){
+		fn(y){x+y};
+	};
+	let addTwo = newAdder(2);
+	addTwo(2);
+	`
+	testIntegerObject(t, testEval(input), 4)
+}
+
+func TestRecursiton(t *testing.T) {
+	input := `
+	let countDown = fn(x){
+		if(x==0){
+			return 0;
+		}else{
+			countDown(x-1);
+		}
+	};
+	countDown(10);
+	`
+	testIntegerObject(t, testEval(input), 0)
+}
