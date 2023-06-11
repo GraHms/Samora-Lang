@@ -105,3 +105,45 @@ func (a *Array) Inspect() string {
 	out.WriteString("]")
 	return out.String()
 }
+
+type Hash struct {
+	Pairs map[Object]Object
+}
+
+func (h *Hash) Type() ObjectType { return ARRAY_OBJ }
+func (h *Hash) Inspect() string {
+	var out bytes.Buffer
+	pairs := []string{}
+	for k, v := range h.Pairs {
+		pairs = append(pairs, k.Inspect()+":"+v.Inspect())
+	}
+	out.WriteString("{")
+	out.WriteString((strings.Join(pairs, ", ")))
+	out.WriteString("}")
+	return out.String()
+}
+
+type HashKey struct {
+	Type  ObjectType
+	Value uint64
+}
+
+func (b *Boolean) HashKey() HashKey {
+	var value uint64
+	if b.Value {
+		value = 1
+	}
+	return HashKey{Type: b.Type(), Value: value}
+}
+
+func (i *Integer) HashKey() HashKey {
+	return HashKey{Type: i.Type(), Value: uint64(i.Value)}
+}
+
+func (s *String) HashKey() HashKey {
+	var h uint64
+	for _, c := range s.Value {
+		h += uint64(c)
+	}
+	return HashKey{Type: s.Type(), Value: h}
+}
