@@ -1,6 +1,9 @@
 package evaluator
 
-import "github.com/grahms/samoralang/object"
+import (
+	"github.com/grahms/samoralang/object"
+	"strings"
+)
 
 var builtins = map[string]*object.Builtin{
 	"len": {Fn: func(args ...object.Object) object.Object {
@@ -89,14 +92,20 @@ var builtins = map[string]*object.Builtin{
 	},
 	"print": {Fn: func(args ...object.Object) object.Object {
 		for _, arg := range args {
-			print(arg.Inspect())
+			str := arg.Inspect()
+			str = strings.ReplaceAll(str, "\\n", "\n")
+			str = strings.ReplaceAll(str, "\\t", "\t")
+			print(str)
 		}
 		return NULL
 	},
 	},
 	"println": {Fn: func(args ...object.Object) object.Object {
 		for _, arg := range args {
-			println(arg.Inspect())
+			str := arg.Inspect()
+			str = strings.ReplaceAll(str, "\\n", "\n")
+			str = strings.ReplaceAll(str, "\\t", "\t")
+			println(str)
 		}
 		return NULL
 	},
