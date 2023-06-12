@@ -1,4 +1,9 @@
+let adder = fn(x) {
+  fn(y) {
+    x + y;
+  };
+};
 
-let file = readFile("README.md");
-print();
-
+let addTwo = adder(2);
+let result = addTwo(3);
+print("2 + 3 = ", result);
