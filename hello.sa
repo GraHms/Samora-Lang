@@ -1,4 +1,4 @@
 
 let file = readFile("README.md");
-print(file);
+print();
 
