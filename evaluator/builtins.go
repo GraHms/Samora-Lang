@@ -98,6 +98,11 @@ var builtins = map[string]*object.Builtin{
 	"input":   {Fn: inputFunc},
 	"int":     {Fn: intFunc},
 	"str":     {Fn: strFunc},
+	//	file system
+	"readFile":   {Fn: readFileFunc},
+	"writeFile":  {Fn: writeFileFunc},
+	"removeFile": {Fn: removeFileFunc},
+	"readDir":    {Fn: readDirFunc},
 }
 
 func inputFunc(args ...object.Object) object.Object {
