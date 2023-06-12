@@ -20,6 +20,16 @@ To familiarize yourself with Samora Lang, here's a "Hello, World!" example:
 print("Hello, World!");
 ```
 
+# Read a file from the filesystem
+let content = readFile("file.txt")
+println(content)
+
+# Write data to a file
+let data = "This is some content"
+writeFile("file.txt", data)
+
+# Delete a file
+deleteFile("file.txt")
 ## Language Features
 
 Samora Lang boasts the following key features:
