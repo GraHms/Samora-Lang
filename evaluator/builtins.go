@@ -118,6 +118,7 @@ var builtins = map[string]*object.Builtin{
 			return newError("wrong number of arguments. got=%d, want=0",
 				len(args))
 		}
+
 		reader := bufio.NewReader(os.Stdin)
 		input, err := reader.ReadString('\n')
 		if err != nil {

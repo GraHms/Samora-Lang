@@ -1,2 +1,3 @@
-let number = "10";
-print(int(number)+10);
+print("Enter a number: ");
+let number = int(input());
+println("The sum of your number is: "+str(number+number));
