@@ -94,4 +94,11 @@ var builtins = map[string]*object.Builtin{
 		return NULL
 	},
 	},
+	"println": {Fn: func(args ...object.Object) object.Object {
+		for _, arg := range args {
+			println(arg.Inspect())
+		}
+		return NULL
+	},
+	},
 }

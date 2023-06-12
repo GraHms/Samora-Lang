@@ -1,4 +1,21 @@
-let numbers = [1, 2, 3, 4, 5];
-let squared = map(numbers, fn(x) { x * x });
-let sum = reduce(squared, fn(acc, x) { acc + x }, 0);
-print("The sum of squared numbers is: ", sum);
+// Define a function that creates a person object
+let createPerson = fn(name, age) {
+  let person = {};
+
+  // Define properties
+  person["name"] = name;
+  person["age"] = age;
+
+  // Define methods
+  person["greet"] = fn(self) {
+    print("Hello, my name is " + self["name"] + " and I am " + self["age"] + " years old.");
+  };
+
+  return person;
+};
+
+// Create a person object
+let person = createPerson("John", 25);
+
+// Call the greet method on the person object
+person["greet"](person);
