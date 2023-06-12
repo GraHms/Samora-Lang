@@ -93,63 +93,71 @@ var builtins = map[string]*object.Builtin{
 		return &object.Array{Elements: newElements}
 	},
 	},
-	"print": {Fn: func(args ...object.Object) object.Object {
-		for _, arg := range args {
-			str := arg.Inspect()
-			str = strings.ReplaceAll(str, "\\n", "\n")
-			str = strings.ReplaceAll(str, "\\t", "\t")
-			print(str)
-		}
-		return NULL
-	},
-	},
-	"println": {Fn: func(args ...object.Object) object.Object {
-		for _, arg := range args {
-			str := arg.Inspect()
-			str = strings.ReplaceAll(str, "\\n", "\n")
-			str = strings.ReplaceAll(str, "\\t", "\t")
-			println(str)
-		}
-		return NULL
-	},
-	},
-	"input": {Fn: func(args ...object.Object) object.Object {
-		if len(args) != 0 {
-			return newError("wrong number of arguments. got=%d, want=0",
-				len(args))
-		}
+	"print":   {Fn: printFunc},
+	"println": {Fn: printlnFunc},
+	"input":   {Fn: inputFunc},
+	"int":     {Fn: intFunc},
+	"str":     {Fn: strFunc},
+}
 
-		reader := bufio.NewReader(os.Stdin)
-		input, err := reader.ReadString('\n')
-		if err != nil {
-			return newError("failed to read input: %s", err.Error())
-		}
-		return &object.String{Value: strings.TrimSpace(input)}
-	}},
-	"int": {Fn: func(args ...object.Object) object.Object {
-		if len(args) != 1 {
-			return newError("wrong number of arguments. got=%d, want=1", len(args))
-		}
-		strObj, ok := args[0].(*object.String)
-		if !ok {
-			return newError("argument to `int` must be STRING, got %s", args[0].Type())
-		}
-		str := strObj.Value
-		num, err := strconv.ParseInt(str, 0, 64)
-		if err != nil {
-			return newError("failed to convert string to int: %s", err.Error())
-		}
-		return &object.Integer{Value: num}
-	}},
-	"str": {Fn: func(args ...object.Object) object.Object {
-		if len(args) != 1 {
-			return newError("wrong number of arguments. got=%d, want=1", len(args))
-		}
-		intObj, ok := args[0].(*object.Integer)
-		if !ok {
-			return newError("argument to `str` must be INTEGER, got %s", args[0].Type())
-		}
-		str := strconv.FormatInt(intObj.Value, 10)
-		return &object.String{Value: str}
-	}},
+func inputFunc(args ...object.Object) object.Object {
+	if len(args) != 0 {
+		return newError("wrong number of arguments. got=%d, want=0",
+			len(args))
+	}
+
+	reader := bufio.NewReader(os.Stdin)
+	input, err := reader.ReadString('\n')
+	if err != nil {
+		return newError("failed to read input: %s", err.Error())
+	}
+	return &object.String{Value: strings.TrimSpace(input)}
+}
+
+func printFunc(args ...object.Object) object.Object {
+	for _, arg := range args {
+		str := arg.Inspect()
+		str = strings.ReplaceAll(str, "\\n", "\n")
+		str = strings.ReplaceAll(str, "\\t", "\t")
+		print(str)
+	}
+	return NULL
+}
+
+func printlnFunc(args ...object.Object) object.Object {
+	for _, arg := range args {
+		str := arg.Inspect()
+		str = strings.ReplaceAll(str, "\\n", "\n")
+		str = strings.ReplaceAll(str, "\\t", "\t")
+		println(str)
+	}
+	return NULL
+}
+
+func intFunc(args ...object.Object) object.Object {
+	if len(args) != 1 {
+		return newError("wrong number of arguments. got=%d, want=1", len(args))
+	}
+	strObj, ok := args[0].(*object.String)
+	if !ok {
+		return newError("argument to `int` must be STRING, got %s", args[0].Type())
+	}
+	str := strObj.Value
+	num, err := strconv.ParseInt(str, 0, 64)
+	if err != nil {
+		return newError("failed to convert string to int: %s", err.Error())
+	}
+	return &object.Integer{Value: num}
+}
+
+func strFunc(args ...object.Object) object.Object {
+	if len(args) != 1 {
+		return newError("wrong number of arguments. got=%d, want=1", len(args))
+	}
+	intObj, ok := args[0].(*object.Integer)
+	if !ok {
+		return newError("argument to `str` must be INTEGER, got %s", args[0].Type())
+	}
+	str := strconv.FormatInt(intObj.Value, 10)
+	return &object.String{Value: str}
 }
