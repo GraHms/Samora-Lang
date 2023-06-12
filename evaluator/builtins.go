@@ -1,7 +1,9 @@
 package evaluator
 
 import (
+	"bufio"
 	"github.com/grahms/samoralang/object"
+	"os"
 	"strings"
 )
 
@@ -110,4 +112,16 @@ var builtins = map[string]*object.Builtin{
 		return NULL
 	},
 	},
+	"input": {Fn: func(args ...object.Object) object.Object {
+		if len(args) != 0 {
+			return newError("wrong number of arguments. got=%d, want=0",
+				len(args))
+		}
+		reader := bufio.NewReader(os.Stdin)
+		input, err := reader.ReadString('\n')
+		if err != nil {
+			return newError("failed to read input: %s", err.Error())
+		}
+		return &object.String{Value: strings.TrimSpace(input)}
+	}},
 }
