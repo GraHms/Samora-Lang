@@ -1,4 +1,2 @@
-print("Enter your name: ");
-let reader = input();
-print("\n");
-print("Hello "+reader +"!. Welcome to the world of programming.");
+let number = "10";
+print(int(number)+10);

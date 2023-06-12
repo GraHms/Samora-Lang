@@ -59,12 +59,6 @@ func Execute(input string) int {
 		fmt.Printf("Error parsing: %s\n", p.Errors())
 		os.Exit(1)
 	}
-
-	initL := lexer.New(input)
-	initP := parser.New(initL)
-	initProg := initP.ParseProgram()
-	evaluator.Eval(initProg, env)
-
 	evaluator.Eval(program, env)
 	return 0
 }

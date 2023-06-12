@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"github.com/grahms/samoralang/object"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -123,5 +124,31 @@ var builtins = map[string]*object.Builtin{
 			return newError("failed to read input: %s", err.Error())
 		}
 		return &object.String{Value: strings.TrimSpace(input)}
+	}},
+	"int": {Fn: func(args ...object.Object) object.Object {
+		if len(args) != 1 {
+			return newError("wrong number of arguments. got=%d, want=1", len(args))
+		}
+		strObj, ok := args[0].(*object.String)
+		if !ok {
+			return newError("argument to `int` must be STRING, got %s", args[0].Type())
+		}
+		str := strObj.Value
+		num, err := strconv.ParseInt(str, 0, 64)
+		if err != nil {
+			return newError("failed to convert string to int: %s", err.Error())
+		}
+		return &object.Integer{Value: num}
+	}},
+	"str": {Fn: func(args ...object.Object) object.Object {
+		if len(args) != 1 {
+			return newError("wrong number of arguments. got=%d, want=1", len(args))
+		}
+		intObj, ok := args[0].(*object.Integer)
+		if !ok {
+			return newError("argument to `str` must be INTEGER, got %s", args[0].Type())
+		}
+		str := strconv.FormatInt(intObj.Value, 10)
+		return &object.String{Value: str}
 	}},
 }
