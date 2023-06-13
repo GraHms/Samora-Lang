@@ -95,7 +95,7 @@ func (l *Lexer) NextToken() token.Token {
 		tok = newToken(token.COLON, l.ch)
 
 	default:
-		if isLetter(l.ch) { // isLetter is a helper function
+		if isLetter(l.ch) {
 			tok.Literal = l.readIdentifier()
 			tok.Type = token.LookupIdent(tok.Literal)
 			return tok
@@ -112,16 +112,18 @@ func (l *Lexer) NextToken() token.Token {
 	return tok
 }
 
-func (l *Lexer) readIdentifier() string { // readIdentifier is a helper function
+func isLetter(ch byte) bool {
+	return 'a' <= ch && ch <= 'z' || 'A' <= ch && ch <= 'Z' || ch == '_'
+}
+
+func (l *Lexer) readIdentifier() string {
 	position := l.position
-	for isLetter(l.ch) { // isLetter is a helper function
+	for isLetter(l.ch) {
 		l.readChar()
 	}
 	return l.input[position:l.position]
 }
-func isLetter(ch byte) bool { // isLetter is a helper function
-	return 'a' <= ch && ch <= 'z' || 'A' <= ch && ch <= 'Z' || ch == '_'
-}
+
 func newToken(tokenType token.TokenType, ch byte) token.Token {
 	return token.Token{Type: tokenType, Literal: string(ch)}
 }
