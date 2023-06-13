@@ -1,9 +1,2 @@
-let adder = fn(x) {
-  fn(y) {
-    x + y;
-  };
-};
-
-let addTwo = adder(2);
-let result = addTwo(3);
-print("2 + 3 = ", result);
+let val_10 = 10;
+print("hello Jose \n Im glad you came to my class");
