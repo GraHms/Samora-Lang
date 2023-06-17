@@ -73,7 +73,16 @@ func (l *Lexer) NextToken() token.Token {
 	case '-':
 		tok = newToken(token.MINUS, l.ch)
 	case '/':
+		// check for comment
+		if l.peekChar() == '/' {
+			l.readChar()
+			l.skipComment()
+			return l.NextToken()
+		}
 		tok = newToken(token.SLASH, l.ch)
+	case '#':
+		l.skipComment()
+		return l.NextToken()
 	case '*':
 		tok = newToken(token.ASTERISK, l.ch)
 	case '<':
@@ -124,6 +133,11 @@ func (l *Lexer) readIdentifier() string {
 	return l.input[position:l.position]
 }
 
+func (l *Lexer) skipComment() {
+	for l.ch != '\n' && l.ch != 0 {
+		l.readChar()
+	}
+}
 func newToken(tokenType token.TokenType, ch byte) token.Token {
 	return token.Token{Type: tokenType, Literal: string(ch)}
 }

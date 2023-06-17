@@ -87,6 +87,12 @@ print("2 + 3 = ", result);
 
 In this example, the `adder` function returns a closure that adds the provided value `x` to any value `y` passed to it. The closure `addTwo` adds 2 to its argument `3` and returns the result `5`.
 
+### Single-line Comments Example
+
+```sml
+// This is a single-line comment.
+# This is also a single-line comment.
+```
 ### Array Example
 
 ```sml
