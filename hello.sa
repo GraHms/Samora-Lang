@@ -7,4 +7,4 @@ let adder = fn(x) {
 // addTwo is a function that takes a number and returns a number
 let addTwo = adder(2);
 let result = addTwo(3);
-//print("2 + 3 = ", result);
+println("2 + 3 = ", result);
