@@ -35,6 +35,7 @@ func Execute(input string) int {
 	out := os.Stdout
 	env := object.NewEnvironment()
 	l := lexer.New(input)
+
 	p := parser.New(l)
 
 	program := p.ParseProgram()

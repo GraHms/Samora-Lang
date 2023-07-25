@@ -13,6 +13,7 @@ var (
 
 func Eval(node ast.Node, env *object.Environment) object.Object {
 	switch node := node.(type) {
+
 	case *ast.HashLiteral:
 		return evalHashLiteral(node, env)
 	case *ast.ArrayLiteral:
@@ -97,17 +98,6 @@ func Eval(node ast.Node, env *object.Environment) object.Object {
 
 	return nil
 }
-
-//func evalStatements(stmts []ast.Statement) object.Object {
-//	var result object.Object
-//	for _, stmt := range stmts {
-//		result = Eval(stmt)
-//		if returnValue, ok := result.(*object.ReturnValue); ok {
-//			return returnValue.Value
-//		}
-//	}
-//	return result
-//}
 
 func nativeBoolToBooleanObject(input bool) *object.Boolean {
 	if input {
@@ -252,7 +242,7 @@ func evalIdentifier(node *ast.Identifier, env *object.Environment) object.Object
 	if builtin, ok := builtins[node.Value]; ok {
 		return builtin
 	}
-	return newError("identifier not found: " + node.Value)
+	return newError("variable name not found: " + node.Value)
 }
 
 func evalExpression(exps []ast.Expression, env *object.Environment) []object.Object {
