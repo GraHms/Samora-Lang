@@ -316,6 +316,7 @@ func TestBuiltFunctions(t *testing.T) {
 
 func TestArrayLiteral(t *testing.T) {
 	input := "[1,2*2,3+3]"
+
 	evaluated := testEval(input)
 	result, ok := evaluated.(*object.Array)
 	if !ok {
