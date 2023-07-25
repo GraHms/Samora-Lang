@@ -167,7 +167,7 @@ func TestErrorHandling(t *testing.T) {
 		{"5; true+false; 5;", "unknown operator: BOOLEAN + BOOLEAN"},
 		{"if(10>1){true+false;}", "unknown operator: BOOLEAN + BOOLEAN"},
 		//{"if(10>1){if(10>1){return true+false;}return 1;}", "unknown operator: BOOLEAN + BOOLEAN"},
-		{"foobar", "identifier not found: foobar"},
+		{"foobar", "variable name not found: foobar"},
 		{`"Hello" - "World"`, "unknown operator: STRING - STRING"},
 		{`{"name":"GraHms"}[fn(x){x}]`, "unusable as hash key: FUNCTION"},
 	}

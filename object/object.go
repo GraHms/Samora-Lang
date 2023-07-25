@@ -14,16 +14,16 @@ type Hashable interface {
 }
 
 const (
-	INTEGER_OBJ      = "INTEGER"
-	BOOL_OBJ         = "BOOLEAN"
-	NULL_OBJ         = "NULL"
-	RETURN_VALUE_OBJ = "RETURN_VALUE"
-	ERROR_OBJ        = "ERROR"
-	FUNCTION_OBJ     = "FUNCTION"
-	STRING_OBJ       = "STRING"
-	BUILTIN_OBJ      = "BUILTIN"
-	ARRAY_OBJ        = "ARRAY"
-	HASH_OBJ         = "HASH"
+	IntegerObj     = "INTEGER"
+	BoolObj        = "BOOLEAN"
+	NullObj        = "NULL"
+	ReturnValueObj = "RETURN_VALUE"
+	ErrorObj       = "ERROR"
+	FunctionObj    = "FUNCTION"
+	StringObj      = "STRING"
+	BuiltinObj     = "BUILTIN"
+	ArrayObj       = "ARRAY"
+	HASH_OBJ       = "HASH"
 )
 
 type Object interface {
@@ -36,32 +36,32 @@ type Integer struct {
 }
 
 func (i *Integer) Inspect() string  { return fmt.Sprintf("%d", i.Value) }
-func (i *Integer) Type() ObjectType { return INTEGER_OBJ }
+func (i *Integer) Type() ObjectType { return IntegerObj }
 
 type Boolean struct {
 	Value bool
 }
 
-func (b *Boolean) Type() ObjectType { return BOOL_OBJ }
+func (b *Boolean) Type() ObjectType { return BoolObj }
 func (b *Boolean) Inspect() string  { return fmt.Sprintf("%t", b.Value) }
 
 type Null struct{}
 
-func (n *Null) Type() ObjectType { return NULL_OBJ }
+func (n *Null) Type() ObjectType { return NullObj }
 func (n *Null) Inspect() string  { return "null" }
 
 type ReturnValue struct {
 	Value Object
 }
 
-func (rv *ReturnValue) Type() ObjectType { return RETURN_VALUE_OBJ }
+func (rv *ReturnValue) Type() ObjectType { return ReturnValueObj }
 func (rv *ReturnValue) Inspect() string  { return rv.Value.Inspect() }
 
 type Error struct {
 	Message string
 }
 
-func (e *Error) Type() ObjectType { return ERROR_OBJ }
+func (e *Error) Type() ObjectType { return ErrorObj }
 func (e *Error) Inspect() string  { return "ERROR: " + e.Message }
 
 type Function struct {
@@ -70,16 +70,16 @@ type Function struct {
 	Env        *Environment
 }
 
-func (f *Function) Type() ObjectType { return FUNCTION_OBJ }
+func (f *Function) Type() ObjectType { return FunctionObj }
 func (f *Function) Inspect() string {
 	var out bytes.Buffer
-	params := []string{}
+	var params []string
 	for _, p := range f.Parameters {
 		params = append(params, p.String())
 	}
 	out.WriteString("fn")
 	out.WriteString("(")
-	out.WriteString((strings.Join(params, ", ")))
+	out.WriteString(strings.Join(params, ", "))
 	out.WriteString(") {\n")
 	out.WriteString(f.Body.String())
 	out.WriteString("\n}")
@@ -91,22 +91,22 @@ type String struct {
 	Value string
 }
 
-func (s *String) Type() ObjectType { return STRING_OBJ }
+func (s *String) Type() ObjectType { return StringObj }
 func (s *String) Inspect() string  { return s.Value }
 
 type Array struct {
 	Elements []Object
 }
 
-func (a *Array) Type() ObjectType { return ARRAY_OBJ }
+func (a *Array) Type() ObjectType { return ArrayObj }
 func (a *Array) Inspect() string {
 	var out bytes.Buffer
-	elements := []string{}
+	var elements []string
 	for _, e := range a.Elements {
 		elements = append(elements, e.Inspect())
 	}
 	out.WriteString("[")
-	out.WriteString((strings.Join(elements, ", ")))
+	out.WriteString(strings.Join(elements, ", "))
 	out.WriteString("]")
 	return out.String()
 }
@@ -123,12 +123,12 @@ type Hash struct {
 func (h *Hash) Type() ObjectType { return HASH_OBJ }
 func (h *Hash) Inspect() string {
 	var out bytes.Buffer
-	pairs := []string{}
+	var pairs []string
 	for _, pair := range h.Pairs {
 		pairs = append(pairs, fmt.Sprintf("%s:%s", pair.Key.Inspect(), pair.Value.Inspect()))
 	}
 	out.WriteString("{")
-	out.WriteString((strings.Join(pairs, ", ")))
+	out.WriteString(strings.Join(pairs, ", "))
 	out.WriteString("}")
 	return out.String()
 }
