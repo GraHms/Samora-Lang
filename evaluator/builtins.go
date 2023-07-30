@@ -2,6 +2,7 @@ package evaluator
 
 import (
 	"bufio"
+	"fmt"
 	"github.com/grahms/samoralang/object"
 	"os"
 	"strconv"
@@ -121,10 +122,16 @@ func inputFunc(args ...object.Object) object.Object {
 
 func printFunc(args ...object.Object) object.Object {
 	for _, arg := range args {
-		str := arg.Inspect()
-		str = strings.ReplaceAll(str, "\\n", "\n")
-		str = strings.ReplaceAll(str, "\\t", "\t")
-		print(str)
+		switch arg := arg.(type) {
+		case *object.Integer:
+			fmt.Printf("%d", arg.Value)
+		case *object.Float:
+			fmt.Printf("%.2f", arg.Value) // print float with 2 decimal places
+		case *object.String:
+			fmt.Printf("%s", arg.Value)
+		default:
+			fmt.Printf("%s", arg.Inspect())
+		}
 	}
 	return NULL
 }
