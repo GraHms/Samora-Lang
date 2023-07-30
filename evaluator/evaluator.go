@@ -154,17 +154,14 @@ func evalMinusPrefixOperatorExpression(right object.Object) object.Object {
 func evalInfixExpression(operator string, left, right object.Object) object.Object {
 	switch {
 
-	case left.Type() == object.FLOAT_OBJ || right.Type() == object.FLOAT_OBJ:
-		return evalFloatInfixExpression(operator, left, right)
+	case left.Type() == object.INTEGER_OBJ && right.Type() == object.INTEGER_OBJ:
+		return evalIntegerInfixExpression(operator, left, right)
 	case left.Type() == object.FLOAT_OBJ && right.Type() == object.FLOAT_OBJ:
 		return evalFloatInfixExpression(operator, left, right)
 	case left.Type() == object.INTEGER_OBJ && right.Type() == object.FLOAT_OBJ:
-		return evalFloatInfixExpression(operator, left, right)
+		return evalMixedInfixExpression(operator, left, right)
 	case left.Type() == object.FLOAT_OBJ && right.Type() == object.INTEGER_OBJ:
-		return evalFloatInfixExpression(operator, left, right)
-
-	case left.Type() == object.INTEGER_OBJ && right.Type() == object.INTEGER_OBJ:
-		return evalIntegerInfixExpression(operator, left, right)
+		return evalMixedInfixExpression(operator, left, right)
 	case operator == "==":
 		return nativeBoolToBooleanObject(left == right)
 	case operator == "!=":
@@ -173,9 +170,39 @@ func evalInfixExpression(operator string, left, right object.Object) object.Obje
 		return newError("type mismatch: %s %s %s", left.Type(), operator, right.Type())
 	case left.Type() == object.STRING_OBJ && right.Type() == object.STRING_OBJ:
 		return evalStringInfixExpression(operator, left, right)
+	case left.Type() == object.STRING_OBJ && right.Type() == object.STRING_OBJ:
+		return evalStringInfixExpression(operator, left, right)
 
 	default:
 		return newError("unknown operator: %s %s %s", left.Type(), operator, right.Type())
+	}
+}
+
+func evalMixedInfixExpression(operator string, left, right object.Object) object.Object {
+	leftVal := getFloatValue(left)
+	rightVal := getFloatValue(right)
+	switch operator {
+	case "+":
+		return &object.Float{Value: leftVal + rightVal}
+	case "-":
+		return &object.Float{Value: leftVal - rightVal}
+	case "*":
+		return &object.Float{Value: leftVal * rightVal}
+	case "/":
+		return &object.Float{Value: leftVal / rightVal}
+	default:
+		return newError("unknown operator: %s %s %s", left.Type(), operator, right.Type())
+	}
+}
+
+func getFloatValue(obj object.Object) float64 {
+	switch number := obj.(type) {
+	case *object.Integer:
+		return float64(number.Value)
+	case *object.Float:
+		return number.Value
+	default:
+		return 0
 	}
 }
 
