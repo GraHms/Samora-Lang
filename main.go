@@ -32,7 +32,7 @@ func main() {
 }
 
 func Execute(input string) int {
-	out := os.Stdout
+
 	env := object.NewEnvironment()
 	l := lexer.New(input)
 
@@ -43,10 +43,6 @@ func Execute(input string) int {
 		fmt.Printf("Error parsing: %s\n", p.Errors())
 		os.Exit(1)
 	}
-	evaluated := evaluator.Eval(program, env)
-	if evaluated != nil {
-		_, _ = io.WriteString(out, evaluated.Inspect())
-		_, _ = io.WriteString(out, "\n")
-	}
+	_ = evaluator.Eval(program, env)
 	return 0
 }

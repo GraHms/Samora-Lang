@@ -16,6 +16,7 @@ func TestLetStatements(t *testing.T) {
 		{"let x = 5;", "x", 5},
 		{"let y = true;", "y", true},
 		{"let foobar = y;", "foobar", "y"},
+		{"let f = 5.0;", "f", 5.0},
 	}
 	for _, tt := range tests {
 		l := lexer.New(tt.input)
@@ -205,6 +206,22 @@ func testIntegerLiteral(t *testing.T, il ast.Expression, value int64) bool {
 	return true
 }
 
+func testFloatLiteral(t *testing.T, il ast.Expression, value float64) bool {
+	floatLit, ok := il.(*ast.FloatLiteral)
+	if !ok {
+		t.Errorf("il not *ast.FloatLiteral. got=%T", il)
+		return false
+	}
+	//if floatLit.Value != value {
+	//	t.Errorf("float.Value not %d. got=%d", value, floatLit.Value)
+	//	return false
+	//}
+	if floatLit.TokenLiteral() != fmt.Sprintf("%f", value) {
+		t.Errorf("float.TokenLiteral() not %f. got=%s", value, floatLit.TokenLiteral())
+		return false
+	}
+	return true
+}
 func TestParsingInfixExpressions(t *testing.T) {
 	infixTests := []struct {
 		input      string
@@ -321,7 +338,10 @@ func testLiteralExpression(t *testing.T, exp ast.Expression, expected interface{
 		return testIdentifier(t, exp, v)
 	case bool:
 		return testBooleanLiteral(t, exp, v)
+	case float64:
+		return testFloatLiteral(t, exp, v)
 	}
+
 	t.Errorf("type of exp not handled. got=%T", exp)
 	return false
 }

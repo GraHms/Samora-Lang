@@ -5,6 +5,6 @@ let adder = fn(x) {
 };
 // adder is a function that returns a function
 // addTwo is a function that takes a number and returns a number
-let addTwo = adder(2);
+let addTwo = adder(2.3);
 let result = addTwo(3);
-println("2 + 3 = ", result);
+print("2.3 + 3 = ", result);
