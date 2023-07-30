@@ -6,5 +6,5 @@ type Builtin struct {
 	Fn BuiltInFunction
 }
 
-func (b *Builtin) Type() ObjectType { return BUILTIN_OBJ }
+func (b *Builtin) Type() ObjectType { return BuiltinObj }
 func (b *Builtin) Inspect() string  { return "builtin function" }

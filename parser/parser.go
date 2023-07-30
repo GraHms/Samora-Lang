@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"fmt"
 	"github.com/grahms/samoralang/ast"
 	"github.com/grahms/samoralang/lexer"
 	"github.com/grahms/samoralang/token"
@@ -29,6 +30,7 @@ var precedences = map[token.TokenType]int{
 }
 
 func New(l *lexer.Lexer) *Parser {
+
 	p := &Parser{l: l, errors: []string{}}
 	p.nextToken()
 	p.nextToken()
@@ -126,12 +128,12 @@ func (p *Parser) expectPeek(t token.TokenType) bool {
 }
 
 func (p *Parser) peekError(t token.TokenType) {
-	msg := "expected next token to be %s, got %s instead"
+	msg := fmt.Sprintf("\n Oops! We were expecting to find a '%s' next, but we got a '%s' instead. This happened on Line %d, Column %d. Maybe there's a typo or missing character?", t, p.peekToken.Type, p.peekToken.Line, p.peekToken.Column)
 	p.errors = append(p.errors, msg)
 }
 
 func (p *Parser) noPrefixParseFnError(t token.TokenType) {
-	msg := "no prefix parse function for %s found"
+	msg := fmt.Sprintf("\n Hmm, we've encountered a '%s' on Line %d, Column %d, but we're not sure how to handle it. Maybe there's a typo, or perhaps you're trying to use a feature we don't support yet.", t, p.curToken.Line, p.curToken.Column)
 	p.errors = append(p.errors, msg)
 }
 
