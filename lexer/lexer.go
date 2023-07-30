@@ -1,6 +1,9 @@
 package lexer
 
-import "github.com/grahms/samoralang/token"
+import (
+	"github.com/grahms/samoralang/token"
+	"strings"
+)
 
 type Lexer struct {
 	input        string
@@ -109,8 +112,12 @@ func (l *Lexer) NextToken() token.Token {
 			tok.Type = token.LookupIdent(tok.Literal)
 			return tok
 		} else if isDigit(l.ch) {
-			tok.Type = token.INT
 			tok.Literal = l.readNumber()
+			if strings.Contains(tok.Literal, ".") {
+				tok.Type = token.FLOAT // You'll need to define this token type
+			} else {
+				tok.Type = token.INT
+			}
 			return tok
 		} else {
 			tok = newToken(token.ILLEGAL, l.ch)
@@ -154,14 +161,14 @@ func (l *Lexer) SkipWhitespace() {
 
 func (l *Lexer) readNumber() string {
 	position := l.position
-	for isDigit(l.ch) {
+	for isDigit(l.ch) || l.ch == '.' {
 		l.readChar()
 	}
 	return l.input[position:l.position]
 }
 
 func isDigit(ch byte) bool {
-	return '0' <= ch && ch <= '9'
+	return '0' <= ch && ch <= '9' || ch == '.'
 }
 
 func (l *Lexer) readString() string {

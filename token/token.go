@@ -13,6 +13,7 @@ const (
 	//	 identifiers + literals
 	IDENT = "IDENT" // add, foobar, x, y, ...
 	INT   = "INT"   // 1343456
+	FLOAT = "FLOAT" // for floating-point numbers
 	//	 operators
 	ASSIGN   = "="
 	PLUS     = "+"

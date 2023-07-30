@@ -13,6 +13,9 @@ var (
 
 func Eval(node ast.Node, env *object.Environment) object.Object {
 	switch node := node.(type) {
+	case *ast.FloatLiteral:
+		return &object.Float{Value: node.Value}
+
 	case *ast.HashLiteral:
 		return evalHashLiteral(node, env)
 	case *ast.ArrayLiteral:
@@ -150,6 +153,7 @@ func evalMinusPrefixOperatorExpression(right object.Object) object.Object {
 
 func evalInfixExpression(operator string, left, right object.Object) object.Object {
 	switch {
+
 	case left.Type() == object.INTEGER_OBJ && right.Type() == object.INTEGER_OBJ:
 		return evalIntegerInfixExpression(operator, left, right)
 	case operator == "==":
