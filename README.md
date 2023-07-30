@@ -41,6 +41,11 @@ writeFile("file.txt", data)
 ```sml
 deleteFile("file.txt")
 ```
+
+## Create Directory
+```sml
+makeDir("path")
+```
 ## Language Features
 
 Samora Lang boasts the following key features:
@@ -80,7 +85,7 @@ In this example, the `factorial` function calculates the factorial of a given nu
 
 ### Closure Example
 
-```sml
+```
 let adder = fn(x) {
   fn(y) {
     x + y;

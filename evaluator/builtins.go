@@ -104,6 +104,7 @@ var builtins = map[string]*object.Builtin{
 	"writeFile":  {Fn: writeFileFunc},
 	"removeFile": {Fn: removeFileFunc},
 	"readDir":    {Fn: readDirFunc},
+	"makeDir":    {Fn: makeDirFunc},
 }
 
 func inputFunc(args ...object.Object) object.Object {
@@ -172,4 +173,20 @@ func strFunc(args ...object.Object) object.Object {
 	}
 	str := strconv.FormatInt(intObj.Value, 10)
 	return &object.String{Value: str}
+}
+
+func makeDirFunc(args ...object.Object) object.Object {
+	if len(args) != 1 {
+		return newError("wrong number of arguments. got=%d, want=1", len(args))
+	}
+	strObj, ok := args[0].(*object.String)
+	if !ok {
+		return newError("argument to `makeDir` must be STRING, got %s", args[0].Type())
+	}
+	path := strObj.Value
+	err := os.Mkdir(path, 0755) // Or use os.MkdirAll to create nested directories
+	if err != nil {
+		return newError("failed to create directory: %s", err.Error())
+	}
+	return NULL
 }
