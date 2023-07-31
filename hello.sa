@@ -1,11 +1,11 @@
-let adder = fn(x) {
-  fn(y) {
-    x + y;
-  };
-};
-// adder is a function that returns a function
-// addTwo is a function that takes a number and returns a number
-let addTwo = adder(2.3);
-let result = addTwo(3);
-makeDir("wassap");
-print("2.3 + 3 = ", result);
+
+let loop = fn(x) {
+    let i = 1;
+    println(i);
+    for(i < x) {
+        println(i);
+       let i = i + 1;
+
+    }
+ };
+loop(10);
