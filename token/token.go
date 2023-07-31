@@ -25,9 +25,9 @@ const (
 	SLASH    = "/"
 	EQ       = "=="
 	NOT_EQ   = "!="
-
-	LT = "<"
-	GT = ">"
+	FOR      = "FOR"
+	LT       = "<"
+	GT       = ">"
 
 	//	 delimiters
 	COMMA     = ","
@@ -51,10 +51,14 @@ const (
 
 	STRING = "STRING"
 	COLON  = ":"
+
+	NULL = "null"
 )
 
 var keywords = map[string]TokenType{
 	"fn":     FUNCTION,
+	"for":    FOR,
+	"null":   NULL,
 	"func":   FUNCTION,
 	"def":    FUNCTION,
 	"let":    LET,

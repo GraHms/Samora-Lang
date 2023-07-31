@@ -40,6 +40,8 @@ func New(l *lexer.Lexer) *Parser {
 	p.registerPrefix(token.BANG, p.parsePrefixExpression)
 	p.registerPrefix(token.MINUS, p.parsePrefixExpression)
 	p.registerPrefix(token.FLOAT, p.parseFloatLiteral)
+	p.registerPrefix(token.FOR, p.parseForLoopExpression)
+	p.registerPrefix(token.NULL, p.parseNull)
 
 	p.infixParseFn = make(map[token.TokenType]infixParseFn)
 	p.registerInfix(token.PLUS, p.parseInfixExpression)
@@ -62,6 +64,10 @@ func New(l *lexer.Lexer) *Parser {
 	p.registerPrefix(token.LBRACE, p.parseHashLiteral)
 
 	return p
+}
+
+func (p *Parser) parseNull() ast.Expression {
+	return &ast.NullLiteral{Token: p.curToken}
 }
 
 func (p *Parser) registerPrefix(tokenType token.TokenType, fn prefixParseFn) {
