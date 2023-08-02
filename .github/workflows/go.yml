@@ -36,6 +36,6 @@ jobs:
         echo 'Architecture: amd64' >> debpgk/DEBIAN/control
         echo 'Maintainer: Samora-Lang Community' >> debpgk/DEBIAN/control
         echo 'Description: A Simple Interpreted Programming Language just for Educational Purposes.' >> debpgk/DEBIAN/control
-      
+
       - name: build deb
-       run: apt install dpkg-dev -y && dpkg-scanpackages debpkg 
+        run: apt install dpkg-dev -y && dpkg-scanpackages debpkg
