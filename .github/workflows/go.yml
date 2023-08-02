@@ -31,10 +31,11 @@ jobs:
       run: mkdir debpkg && mkdir debpgk/DEBIAN && mkdir debpkg/usr && mkdir debpkg/usr/bin && cp ./samora debpkg/usr/bin
     
     - name: Create a control file
-     run: echo "Package: Samora-Lang
-        Version: 1.0
-        Architecture: amd64
-        Maintainer: Samora-Lang Community
+     run: |
+      echo "Package: Samora-Lang\
+        Version: 1.0\
+        Architecture: amd64\
+        Maintainer: Samora-Lang Community\
         Description: A Simple Interpreted Programing Language just for Educational Purposes." > debpkg/DEBIAN/control
     - name: Build deb
      run: apt install dpkg-dev -y && dpkg-scanpackages debpkg 
