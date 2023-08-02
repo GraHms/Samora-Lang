@@ -37,5 +37,5 @@ jobs:
         Maintainer: Samora-Lang Community
         Description: A Simple Interpreted Programing Language just for Educational Purposes." > debpkg/DEBIAN/control
     - name: Build deb
-     run: apt install dpkg-dev -y && dpkg-scanpackages debpkg
+     run: apt install dpkg-dev -y && dpkg-scanpackages debpkg 
 
