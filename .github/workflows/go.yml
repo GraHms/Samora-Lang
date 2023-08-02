@@ -5,38 +5,26 @@ name: Go
 
 on:
   push:
-    branches: [ "master" ]
+    branches: ["master"]
   pull_request:
-    branches: [ "master" ]
+    branches: ["master"]
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Set up Go
-      uses: actions/setup-go@v3
-      with:
-        go-version: 1.20
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.20
 
-    - name: Build
-      run: go build -v ./...
+      - name: Build
+        run: go build -v ./...
 
-    - name: Test
-      run: go test -v ./...
+      - name: Test
+        run: go test -v ./...
 
-    - name: Copy files
-      run: mkdir debpkg && mkdir debpgk/DEBIAN && mkdir debpkg/usr && mkdir debpkg/usr/bin && cp ./samora debpkg/usr/bin
-    
-    - name: Create a control file
-     run: |
-      echo "Package: Samora-Lang\
-        Version: 1.0\
-        Architecture: amd64\
-        Maintainer: Samora-Lang Community\
-        Description: A Simple Interpreted Programing Language just for Educational Purposes." > debpkg/DEBIAN/control
-    - name: Build deb
-     run: apt install dpkg-dev -y && dpkg-scanpackages debpkg 
-
+      - name: Copy files
+        run: mkdir debpkg && mkdir debpgk/DEBIAN && mkdir debpkg/usr && mkdir debpkg/usr/bin && cp ./samora debpkg/usr/bin
