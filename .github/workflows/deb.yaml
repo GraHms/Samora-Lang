@@ -17,7 +17,7 @@ jobs:
         run: |
           mkdir -p debpkg/DEBIAN
           mkdir -p debpkg/usr/bin
-          cp ../samora debpkg/usr/bin
+          cp samora debpkg/usr/bin
 
           echo "Package: Samora-Lang" > debpgk/DEBIAN/control
           echo 'Version: 1.0' >> debpgk/DEBIAN/control
