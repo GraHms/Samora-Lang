@@ -15,10 +15,8 @@ jobs:
     steps:
       - name: Build deb
         run: |
-          mkdir debpkg
-          mkdir debpkg/DEBIAN
-          mkdir debpkg/usr && mkdir debpkg/usr/bin
-          ls ./
+          mkdir -p debpkg/DEBIAN
+          mkdir -p debpkg/usr/bin
           cp ./samora debpkg/usr/bin
 
           echo "Package: Samora-Lang" > debpgk/DEBIAN/control
