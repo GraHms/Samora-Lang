@@ -16,7 +16,7 @@ jobs:
       - name: Build deb
         run: |
           mkdir debpkg
-          mkdir debpgk/DEBIAN
+          mkdir debpkg/DEBIAN
           mkdir debpkg/usr && mkdir debpkg/usr/bin
           cp ./samora debpkg/usr/bin
 
