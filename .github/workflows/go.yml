@@ -27,15 +27,15 @@ jobs:
         run: go test -v ./...
 
       - name: Copy files
-        run: mkdir debpkg && mkdir debpgk/DEBIAN && mkdir debpkg/usr && mkdir debpkg/usr/bin && cp ./samora debpkg/usr/bin
-
-      - name: Create a control file
         run: |
-        echo 'Package: Samora-Lang' > debpgk/DEBIAN/control
-        echo 'Version: 1.0' >> debpgk/DEBIAN/control
-        echo 'Architecture: amd64' >> debpgk/DEBIAN/control
-        echo 'Maintainer: Samora-Lang Community' >> debpgk/DEBIAN/control
-        echo 'Description: A Simple Interpreted Programming Language just for Educational Purposes.' >> debpgk/DEBIAN/control
+          mkdir debpkg
+          mkdir debpgk/DEBIAN
+          mkdir debpkg/usr && mkdir debpkg/usr/bin
+          cp ./samora debpkg/usr/bin
 
-      - name: build deb
-        run: apt install dpkg-dev -y && dpkg-scanpackages debpkg
+          echo "Package: Samora-Lang" > debpgk/DEBIAN/control
+          echo 'Version: 1.0' >> debpgk/DEBIAN/control
+          echo 'Architecture: amd64' >> debpgk/DEBIAN/control
+          echo 'Maintainer: Samora-Lang Community' >> debpgk/DEBIAN/control
+          echo 'Description: A Simple Interpreted Programming Language just for Educational Purposes.' >> debpgk/DEBIAN/control
+          apt install dpkg-dev -y && dpkg-scanpackages debpkg
