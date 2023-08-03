@@ -15,6 +15,7 @@ jobs:
     steps:
       - name: Build deb
         run: |
+          ls
           mkdir debpkg
           mkdir debpkg/DEBIAN
           mkdir debpkg/usr && mkdir debpkg/usr/bin
