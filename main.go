@@ -3,10 +3,10 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/eusebiosimango/samoralang/evaluator"
-	"github.com/eusebiosimango/samoralang/lexer"
-	"github.com/eusebiosimango/samoralang/object"
-	"github.com/eusebiosimango/samoralang/parser"
+	"github.com/EusebioSimango/samoralang/evaluator"
+	"github.com/EusebioSimango/samoralang/lexer"
+	"github.com/EusebioSimango/samoralang/object"
+	"github.com/EusebioSimango/samoralang/parser"
 	"io"
 	"os"
 )
