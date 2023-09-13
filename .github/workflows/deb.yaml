@@ -18,10 +18,10 @@ jobs:
       - run: |
           export pwd_now=$(pwd)
 
-          mkdir -p debpkg/DEBIAN
-          mkdir -p debpkg/usr/bin
-          ls debpkg/DEBIAN
-          cp samora debpkg/usr/bin
+          mkdir -p $pwd_now/debpkg/DEBIAN
+          mkdir -p $pwd_now/debpkg/usr/bin
+          ls $pwd_now/debpkg/DEBIAN
+          cp samora $pwd_now/debpkg/usr/bin
 
           touch $pwd_now/debpgk/DEBIAN/control
           echo 'Package: Samora-Lang' >> $pwd_now/debpgk/DEBIAN/control
