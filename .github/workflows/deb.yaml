@@ -16,15 +16,16 @@ jobs:
       - name: Build deb
         uses: actions/checkout@v3
       - run: |
+          export pwd_now=$(pwd)
+
           mkdir -p debpkg/DEBIAN
           mkdir -p debpkg/usr/bin
-          ls
+          ls debpkg
           cp samora debpkg/usr/bin
 
-          touch debpkg/DEBIAN/control
-          echo "Package: Samora-Lang" > debpgk/DEBIAN/control
-          echo 'Version: 1.0' >> debpgk/DEBIAN/control
-          echo 'Architecture: amd64' >> debpgk/DEBIAN/control
-          echo 'Maintainer: Samora-Lang Community' >> debpgk/DEBIAN/control
-          echo 'Description: A Simple Interpreted Programming Language just for Educational Purposes.' >> debpgk/DEBIAN/control
+          echo "Package: Samora-Lang" > $pwd_now/debpgk/DEBIAN/control
+          echo 'Version: 1.0' >> $pwd_now/debpgk/DEBIAN/control
+          echo 'Architecture: amd64' >> $pwd_now/debpgk/DEBIAN/control
+          echo 'Maintainer: Samora-Lang Community' >> $pwd_now/debpgk/DEBIAN/control
+          echo 'Description: A Simple Interpreted Programming Language just for Educational Purposes.' >> $pwd_now/debpgk/DEBIAN/control
           apt install dpkg-dev -y && dpkg-scanpackages debpkg
