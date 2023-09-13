@@ -13,7 +13,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    
       - name: Build deb
         uses: actions/checkout@v3
       - run: |
@@ -22,6 +21,7 @@ jobs:
           ls
           cp samora debpkg/usr/bin
 
+          touch debpkg/DEBIAN/control
           echo "Package: Samora-Lang" > debpgk/DEBIAN/control
           echo 'Version: 1.0' >> debpgk/DEBIAN/control
           echo 'Architecture: amd64' >> debpgk/DEBIAN/control
