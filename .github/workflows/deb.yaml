@@ -23,7 +23,7 @@ jobs:
           ls debpkg/DEBIAN
           cp samora debpkg/usr/bin
 
-          touch $pwd/debpkg/DEBIAN/control
+          touch $pwd_now/debpkg/DEBIAN/control
           echo "Package: Samora-Lang" > $pwd_now/debpgk/DEBIAN/control
           echo 'Version: 1.0' >> $pwd_now/debpgk/DEBIAN/control
           echo 'Architecture: amd64' >> $pwd_now/debpgk/DEBIAN/control
