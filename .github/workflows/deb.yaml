@@ -13,8 +13,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    
       - name: Build deb
-        run: |
+        uses: actions/checkout@v3
+      - run: |
           mkdir -p debpkg/DEBIAN
           mkdir -p debpkg/usr/bin
           cp samora debpkg/usr/bin
