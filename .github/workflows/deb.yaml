@@ -19,7 +19,8 @@ jobs:
       - run: |
           mkdir -p debpkg/DEBIAN
           mkdir -p debpkg/usr/bin
-          ls 
+          ls
+          ls {{ $HOME }}
           cp samora debpkg/usr/bin
 
           echo "Package: Samora-Lang" > debpgk/DEBIAN/control
