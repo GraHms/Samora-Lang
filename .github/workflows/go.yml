@@ -30,14 +30,13 @@ jobs:
           latest_tag=$(git describe --tags --abbrev=0)
           echo "tag_name=$latest_tag" >> $GITHUB_OUTPUT
 
-      - name: Create Release
+      - name: create release
         id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        uses: ncipollo/release-action@v1
         with:
-          tag_name: ${{ steps.tag.outputs.tag_name }}
-          release_name: ${{ steps.tag.outputs.tag_name }}
+          token: "${{ secrets.GITHUB_TOKEN }}"
+          tag: ${{ steps.tag.outputs.tag_name }}
+          name: ${{ steps.tag.outputs.tag_name }}
           draft: false
           prerelease: false
 
