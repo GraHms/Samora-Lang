@@ -10,7 +10,7 @@ on:
     branches: ["master"]
 
 jobs:
-  build:
+  unix:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -56,3 +56,21 @@ jobs:
           arch: "amd64"
           # depends: 'libc6 (>= 2.2.1), git'
           desc: "A Simple Interpreted Programming Language just for Educational Purposes."
+  windows:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.20"
+
+      - name: Build
+        run: go build -o "samora" ./main.go
+
+      - name: Upload samora-lang artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: samora-lang-win
+          path: samora.exe
