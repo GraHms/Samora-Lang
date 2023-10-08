@@ -13,7 +13,7 @@ jobs:
   dump_tag:
     runs-on: ubuntu-latest
     outputs:
-      release_id: ${{ steps.get_release.outputs.ID }}
+      release_id: ${{ steps.create_release.outputs.id }}
     steps:
       - uses: actions/checkout@v3
       - name: Bump release version and push tag
@@ -24,11 +24,22 @@ jobs:
           WITH_V: false
           PRERELEASE: false
 
-      - name: Get latest release ID
-        id: get_release
+      - name: get the latest tag
+        id: tag
         run: |
-          LATEST_RELEASE=$(curl -s https://api.github.com/repos/${{ github.repository }}/releases/latest)
-          echo "ID=$(echo $LATEST_RELEASE | jq -r .id)" >> $GITHUB_OUTPUT
+          latest_tag=$(git describe --tags --abbrev=0)
+          echo "tag_name=$latest_tag" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ steps.tag.outputs.tag_name }}
+          release_name: ${{ steps.tag.outputs.tag_name }}
+          draft: false
+          prerelease: false
 
   unix:
     runs-on: ubuntu-latest
