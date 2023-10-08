@@ -35,8 +35,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         uses: actions/create-release@v1
         with:
-          tag_name: v1.0 # Defina a tag da versão
-          release_name: Unix Release v1.0 # Nome da versão
+          tag_name: ${{ github.ref }} # Defina a tag da versão
+          release_name: Unix Release ${{ github.ref }} # Nome da versão
           draft: false
           prerelease: false
 
