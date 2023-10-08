@@ -31,6 +31,8 @@ jobs:
 
       - name: Create Unix release
         id: create_release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
         uses: actions/create-release@v1
         with:
           tag_name: v1.0 # Defina a tag da versão
@@ -76,7 +78,7 @@ jobs:
           desc: "A Simple Interpreted Programming Language just for Educational Purposes."
 
   windows:
-    runs-on: windows-2022
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
 
