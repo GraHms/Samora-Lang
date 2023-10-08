@@ -32,7 +32,7 @@ jobs:
       - name: Create Unix release
         id: create_release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         uses: actions/create-release@v1
         with:
           tag_name: v1.0 # Defina a tag da versão
@@ -40,14 +40,15 @@ jobs:
           draft: false
           prerelease: false
 
-      - name: Attach Binaries to Release
-        id: attach_binaries
-        uses: actions/upload-release-asset@v1
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: basefas/upload-release-asset-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          release_id: ${{ steps.create_release.outputs.id }} # This pulls from the Get RELEASE step above, referencing its ID to get its outputs object, which include a `id`.
           asset_path: samora
           asset_name: samora-lang
-          asset_content_type: application/octet-stream
 
       # - name: Create GitHub Release
       #   uses: softprops/action-gh-release@v1
