@@ -68,11 +68,11 @@ jobs:
 
       - name: Build
         run: |
-          go build -o "samora" ./main.go
+          go build -o "samora.exe" ./main.go
           ls
 
       - name: Upload samora-lang artifact
         uses: actions/upload-artifact@v3
         with:
           name: samora-lang-win
-          path: ./*.exe
+          path: samora.exe
