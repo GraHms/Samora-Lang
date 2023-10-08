@@ -18,16 +18,10 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          go-version: "1.20"
+          go-version-file: go.mod
 
-      - name: Build
+      - name: Build samora
         run: go build -o "samora" ./main.go
-
-      - name: Upload samora-lang artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: samora-lang
-          path: samora
 
       - name: Create a unix release
         id: unix_release
@@ -35,8 +29,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         uses: actions/create-release@v1
         with:
-          tag_name: v0.6.0
-          release_name: Unix Release v0.6.0
+          tag_name: v1.0.0
+          release_name: Release v1.0.0
           draft: false
           prerelease: false
 
@@ -50,41 +44,31 @@ jobs:
           asset_path: samora
           asset_name: samora-lang
 
-      - name: Build deb
-        run: |
-          mkdir -p .debpkg/usr/bin
-          cp samora .debpkg/usr/bin/samora
-          chmod +x .debpkg/usr/bin/samora
+  win:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
 
-          mkdir -p .debpkg/DEBIAN
-
-      - uses: jiro4989/build-deb-action@v3
+      - name: Set up Go
+        uses: actions/setup-go@v4
         with:
-          package: samora-lang
-          package_root: .debpkg
-          maintainer: Samora-Lang Community
-          version: 1.0.0 # ${{ github.ref }} # refs/tags/v*.*.*
-          arch: "amd64"
-          # depends: 'libc6 (>= 2.2.1), git'
-          desc: "A Simple Interpreted Programming Language just for Educational Purposes."
+          go-version-file: go.mod
 
-      - name: Create a debian release
-        id: deb_release
+      - name: Build samora.exe
+        run: go build -o "samora.exe" ./main.go
+      
+      - name: Get Release
+        id: get_release
+        uses: bruceadams/get-release@v1.3.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        uses: actions/create-release@v1
-        with:
-          tag_name: v0.5.0
-          release_name: Debian Release v0.5.0
-          draft: false
-          prerelease: false
 
-      - name: Upload the sml.deb release
-        id: deb-release-asset
+      - name: Upload the sml unix release
+        id: windows-release-asset
         uses: basefas/upload-release-asset-action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          release_id: ${{ steps.deb_release.outputs.id }}
-          asset_path: ./samora-lang_1.0.0_amd64.deb
-          asset_name: samora-lang.deb
+          release_id: ${{ steps.get_release.outputs.id }}
+          asset_path: samora.exe
+          asset_name: samora-lang-win.exe
