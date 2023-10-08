@@ -3,11 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/grahms/samoralang/evaluator"
-	"github.com/grahms/samoralang/lexer"
-	"github.com/grahms/samoralang/object"
-	"github.com/grahms/samoralang/parser"
-	"io"
+	"github.com/grahms/samoralang/commands"
 	"os"
 )
 
@@ -15,34 +11,25 @@ func main() {
 
 	flag.Parse()
 
-	var input []byte
-	var err error
-
-	if len(flag.Args()) > 0 {
-		input, err = os.ReadFile(os.Args[1])
-	} else {
-		input, err = io.ReadAll(os.Stdin)
+	switch len(flag.Args()) {
+	case 0:
+		commands.StartREPL()	
+	case 1:
+		handleCommand("run", 1)
+	default:
+		handleCommand(os.Args[1], 2)
 	}
-
-	if err != nil {
-		fmt.Printf("Error reading: %s\n", err.Error())
-	}
-
-	Execute(string(input))
 }
 
-func Execute(input string) int {
+func handleCommand(command string, arg_n int) {
+	input_file := os.Args[arg_n]
+	input, err := os.ReadFile(input_file)
 
-	env := object.NewEnvironment()
-	l := lexer.New(input)
-
-	p := parser.New(l)
-
-	program := p.ParseProgram()
-	if len(p.Errors()) != 0 {
-		fmt.Printf("Error parsing: %s\n", p.Errors())
-		os.Exit(1)
+	if err != nil {
+		pwd, _ := os.Getwd()
+		fmt.Printf("Error: can't open %s/%s\n", pwd, input_file)
+		return
 	}
-	_ = evaluator.Eval(program, env)
-	return 0
+
+	commands.Commands[command](input);
 }
