@@ -5,6 +5,8 @@ type TokenType string
 type Token struct {
 	Type    TokenType
 	Literal string
+	Line    int
+	Column  int
 }
 
 const (
@@ -13,6 +15,7 @@ const (
 	//	 identifiers + literals
 	IDENT = "IDENT" // add, foobar, x, y, ...
 	INT   = "INT"   // 1343456
+	FLOAT = "FLOAT" // for floating-point numbers
 	//	 operators
 	ASSIGN   = "="
 	PLUS     = "+"

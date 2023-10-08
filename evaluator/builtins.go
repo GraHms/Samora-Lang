@@ -2,6 +2,7 @@ package evaluator
 
 import (
 	"bufio"
+	"fmt"
 	"github.com/grahms/samoralang/object"
 	"os"
 	"strconv"
@@ -29,7 +30,7 @@ var builtins = map[string]*object.Builtin{
 			return newError("wrong number of arguments. got=%d, want=1",
 				len(args))
 		}
-		if args[0].Type() != object.ARRAY_OBJ {
+		if args[0].Type() != object.ArrayObj {
 			return newError("argument to `first` must be ARRAY, got %s",
 				args[0].Type())
 		}
@@ -45,7 +46,7 @@ var builtins = map[string]*object.Builtin{
 			return newError("wrong number of arguments. got=%d, want=1",
 				len(args))
 		}
-		if args[0].Type() != object.ARRAY_OBJ {
+		if args[0].Type() != object.ArrayObj {
 			return newError("argument to `last` must be ARRAY, got %s",
 				args[0].Type())
 		}
@@ -62,7 +63,7 @@ var builtins = map[string]*object.Builtin{
 			return newError("wrong number of arguments. got=%d, want=1",
 				len(args))
 		}
-		if args[0].Type() != object.ARRAY_OBJ {
+		if args[0].Type() != object.ArrayObj {
 			return newError("argument to `rest` must be ARRAY, got %s",
 				args[0].Type())
 		}
@@ -81,7 +82,7 @@ var builtins = map[string]*object.Builtin{
 			return newError("wrong number of arguments. got=%d, want=2",
 				len(args))
 		}
-		if args[0].Type() != object.ARRAY_OBJ {
+		if args[0].Type() != object.ArrayObj {
 			return newError("argument to `push` must be ARRAY, got %s",
 				args[0].Type())
 		}
@@ -98,11 +99,12 @@ var builtins = map[string]*object.Builtin{
 	"input":   {Fn: inputFunc},
 	"int":     {Fn: intFunc},
 	"str":     {Fn: strFunc},
-	//	file system
+
 	"readFile":   {Fn: readFileFunc},
 	"writeFile":  {Fn: writeFileFunc},
 	"removeFile": {Fn: removeFileFunc},
 	"readDir":    {Fn: readDirFunc},
+	"makeDir":    {Fn: makeDirFunc},
 }
 
 func inputFunc(args ...object.Object) object.Object {
@@ -121,10 +123,16 @@ func inputFunc(args ...object.Object) object.Object {
 
 func printFunc(args ...object.Object) object.Object {
 	for _, arg := range args {
-		str := arg.Inspect()
-		str = strings.ReplaceAll(str, "\\n", "\n")
-		str = strings.ReplaceAll(str, "\\t", "\t")
-		print(str)
+		switch arg := arg.(type) {
+		case *object.Integer:
+			fmt.Printf("%d", arg.Value)
+		case *object.Float:
+			fmt.Printf("%.2f", arg.Value) // print float with 2 decimal places
+		case *object.String:
+			fmt.Printf("%s", arg.Value)
+		default:
+			fmt.Printf("%s", arg.Inspect())
+		}
 	}
 	return NULL
 }
@@ -165,4 +173,20 @@ func strFunc(args ...object.Object) object.Object {
 	}
 	str := strconv.FormatInt(intObj.Value, 10)
 	return &object.String{Value: str}
+}
+
+func makeDirFunc(args ...object.Object) object.Object {
+	if len(args) != 1 {
+		return newError("wrong number of arguments. got=%d, want=1", len(args))
+	}
+	strObj, ok := args[0].(*object.String)
+	if !ok {
+		return newError("argument to `makeDir` must be STRING, got %s", args[0].Type())
+	}
+	path := strObj.Value
+	err := os.Mkdir(path, 0755) // Or use os.MkdirAll to create nested directories
+	if err != nil {
+		return newError("failed to create directory: %s", err.Error())
+	}
+	return NULL
 }

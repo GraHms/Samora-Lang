@@ -9,6 +9,13 @@ Samora Lang is a simple and expressive programming language designed just for fu
 To get started with Samora Lang, follow these steps:
 
 1. Install the Samora Lang compiler and interpreter.
+
+### Arch Linux
+Using the Arch User Repository
+```
+$   yay -S samora-lang
+```
+
 2. Write your Samora Lang code in a text editor or an integrated development environment (IDE).
 3. Save your Samora Lang code with a `.sml` extension.
 
@@ -33,6 +40,11 @@ writeFile("file.txt", data)
 ## Delete a file
 ```sml
 deleteFile("file.txt")
+```
+
+## Create Directory
+```sml
+makeDir("path")
 ```
 ## Language Features
 
@@ -73,7 +85,7 @@ In this example, the `factorial` function calculates the factorial of a given nu
 
 ### Closure Example
 
-```sml
+```
 let adder = fn(x) {
   fn(y) {
     x + y;
@@ -87,6 +99,12 @@ print("2 + 3 = ", result);
 
 In this example, the `adder` function returns a closure that adds the provided value `x` to any value `y` passed to it. The closure `addTwo` adds 2 to its argument `3` and returns the result `5`.
 
+### Single-line Comments Example
+
+```sml
+// This is a single-line comment.
+# This is also a single-line comment.
+```
 ### Array Example
 
 ```sml
