@@ -73,4 +73,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: samora-lang-win
-          path: samora.exe
+          path: ./*.exe
