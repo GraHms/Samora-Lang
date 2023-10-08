@@ -29,6 +29,24 @@ jobs:
           name: samora-lang
           path: samora
 
+      - name: Create Unix release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: v1.0 # Defina a tag da versão
+          release_name: Unix Release v1.0 # Nome da versão
+          draft: false
+          prerelease: false
+
+      - name: Attach Binaries to Release
+        id: attach_binaries
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: samora
+          asset_name: samora-lang
+          asset_content_type: application/octet-stream
+
       # - name: Create GitHub Release
       #   uses: softprops/action-gh-release@v1
       #   with:
@@ -56,6 +74,7 @@ jobs:
           arch: "amd64"
           # depends: 'libc6 (>= 2.2.1), git'
           desc: "A Simple Interpreted Programming Language just for Educational Purposes."
+
   windows:
     runs-on: windows-2022
     steps:
@@ -69,7 +88,6 @@ jobs:
       - name: Build
         run: |
           go build -o "samora.exe" ./main.go
-          ls
 
       - name: Upload samora-lang artifact
         uses: actions/upload-artifact@v3
