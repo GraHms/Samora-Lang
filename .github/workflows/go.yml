@@ -23,8 +23,18 @@ jobs:
       - name: Build
         run: go build -o "samora" ./main.go
 
-      - name: Upload math result for job 2
+      - name: Upload samora-lang artifact
         uses: actions/upload-artifact@v3
         with:
           name: samora-lang
           path: samora
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            samora
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
