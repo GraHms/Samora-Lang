@@ -35,8 +35,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         uses: actions/create-release@v1
         with:
-          tag_name: v0.3.0
-          release_name: Unix Release v0.3.0
+          tag_name: v0.6.0
+          release_name: Unix Release v0.6.0
           draft: false
           prerelease: false
 
@@ -74,8 +74,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         uses: actions/create-release@v1
         with:
-          tag_name: v0.2.0
-          release_name: Debian Release v0.2.0
+          tag_name: v0.5.0
+          release_name: Debian Release v0.5.0
           draft: false
           prerelease: false
 
@@ -86,5 +86,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           release_id: ${{ steps.deb_release.outputs.id }}
-          asset_path: ./*.deb
+          asset_path: ./samora-lang_1.0.0_amd64.deb
           asset_name: samora-lang.deb
