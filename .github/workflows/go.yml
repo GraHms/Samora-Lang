@@ -22,3 +22,9 @@ jobs:
 
       - name: Build
         run: go build -o "samora" ./main.go
+
+      - name: Upload math result for job 2
+        uses: actions/upload-artifact@v3
+        with:
+          name: samora-lang
+          path: samora
