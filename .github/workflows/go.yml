@@ -28,7 +28,7 @@ jobs:
         id: get_release
         run: |
           LATEST_RELEASE=$(curl -s https://api.github.com/repos/${{ github.repository }}/releases/latest)
-          echo "ID=$(echo $LATEST_RELEASE | jq -r .id" >> $GITHUB_OUTPUT
+          echo "ID=$(echo $LATEST_RELEASE | jq -r .id)" >> $GITHUB_OUTPUT
 
   unix:
     runs-on: ubuntu-latest
