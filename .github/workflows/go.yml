@@ -22,23 +22,23 @@ jobs:
 
       - name: Build
         run: go build -o "samora" ./main.go
-        
+
       - name: Upload samora-lang artifact
         uses: actions/upload-artifact@v3
         with:
           name: samora-lang
           path: samora
 
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            samora
-          draft: false
-          prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
+      # - name: Create GitHub Release
+      #   uses: softprops/action-gh-release@v1
+      #   with:
+      #     files: |
+      #       samora
+      #     draft: false
+      #     prerelease: false
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Build deb
         uses: actions/checkout@v3
       - run: |
