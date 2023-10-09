@@ -5,24 +5,85 @@ name: Go
 
 on:
   push:
-    branches: [ "master" ]
+    branches: ["master"]
   pull_request:
-    branches: [ "master" ]
+    branches: ["master"]
 
 jobs:
-
-  build:
+  dump_tag:
     runs-on: ubuntu-latest
+    outputs:
+      release_id: ${{ steps.create_release.outputs.id }}
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+      - name: Bump release version and push tag
+        id: release
+        uses: anothrNick/github-tag-action@1.64.0 # Don't use @master or @v1 unless you're happy to test the latest version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # if you don't want to set write permissions use a PAT token
+          WITH_V: false
+          PRERELEASE: false
 
-    - name: Set up Go
-      uses: actions/setup-go@v3
-      with:
-        go-version: 1.20
+      - name: get the latest tag
+        id: tag
+        run: |
+          latest_tag=$(git describe --tags --abbrev=0)
+          echo "tag_name=$latest_tag" >> $GITHUB_OUTPUT
 
-    - name: Build
-      run: go build -v ./...
+      - name: create release
+        id: create_release
+        uses: ncipollo/release-action@v1
+        with:
+          token: "${{ secrets.GITHUB_TOKEN }}"
+          tag: ${{ steps.tag.outputs.tag_name }}
+          name: ${{ steps.tag.outputs.tag_name }}
+          draft: false
+          prerelease: false
 
-    - name: Test
-      run: go test -v ./...
+  unix:
+    runs-on: ubuntu-latest
+    needs: dump_tag
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version-file: go.mod
+
+      - name: Build samora
+        run: go build -o "samora" ./main.go
+
+      - name: Upload the sml unix asset
+        id: unix-release-asset
+        uses: basefas/upload-release-asset-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          release_id: ${{ needs.dump_tag.outputs.release_id }}
+          asset_path: samora
+          asset_name: samora-lang
+
+  win:
+    runs-on: windows-latest
+    needs: dump_tag
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version-file: go.mod
+
+      - name: Build samora.exe
+        run: go build -o "samora.exe" ./main.go
+
+      - name: Upload samora.exe asset
+        id: windows-release-asset
+        uses: basefas/upload-release-asset-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          release_id: ${{ needs.dump_tag.outputs.release_id }}
+          asset_path: samora.exe
+          asset_name: samora-lang-win.exe
