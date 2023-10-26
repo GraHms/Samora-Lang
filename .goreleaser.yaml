@@ -10,7 +10,7 @@ builds:
       - arm64
 nfpms:
 - maintainer: Ismael GraHms <grahms@outlook.com>
-  description: Provides support for editing samora scripts with full support for font-locking, but no special keybindings, or indentation handling
+  description: Samora Lang - A Simple Interpreted Programing Language just for Educational Purposes
   homepage: https://github.com/GraHms/Samora-Lang
   license: MIT
   formats:
