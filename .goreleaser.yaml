@@ -1,0 +1,19 @@
+project_name: example
+builds:
+  - env: [CGO_ENABLED=0]
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+nfpms:
+- maintainer: Ismael GraHms <grahms@outlook.com>
+  description: Provides support for editing samora scripts with full support for font-locking, but no special keybindings, or indentation handling
+  homepage: https://github.com/GraHms/Samora-Lang
+  license: MIT
+  formats:
+  - deb
+  - rpm
+  - apk
