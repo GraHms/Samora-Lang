@@ -8,7 +8,7 @@ Samora Lang is a simple and expressive programming language designed just for fu
 
 To get started with Samora Lang, follow these steps:
 
-1. Install the Samora Lang compiler and interpreter.
+1. Install the Samora Lang compiler and interpreter from the binary corresponding to your OS Architecture.
 
 ### Arch Linux
 Using the Arch User Repository

@@ -1,0 +1,19 @@
+project_name: samora-lang
+builds:
+  - env: [CGO_ENABLED=0]
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+nfpms:
+- maintainer: Ismael GraHms <grahms@outlook.com>
+  description: Samora Lang - A Simple Interpreted Programing Language just for Educational Purposes
+  homepage: https://github.com/GraHms/Samora-Lang
+  license: MIT
+  formats:
+  - deb
+  - rpm
+  - apk
