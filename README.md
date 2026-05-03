@@ -12,38 +12,70 @@ To get started with Samora Lang, follow these steps:
 
 ### Arch Linux
 Using the Arch User Repository
+
 ```
-$   yay -S samora-lang
+yay -S samora-lang
 ```
+### Manual installation (Linux, Window, MacOS)
+
+First install git and golang on your computer:
+
+```bash
+sudo dnf install git golang ## Red Hat-based distributions.
+sudo apt install git golang ## Debian-based distributions.
+```
+
+
+On Windows, you can manually install [Git](https://git-scm.com/download/win) and [Go Lang](https://go.dev/doc/install).
+Then clone the official repository:
+```bash
+git clone https://github.com/GraHms/Samora-Lang.git && cd Samora-Lang ## Classic form
+gh repo clone GraHms/Samora-Lang && cd Samora-Lang ## Github CLI
+```
+
+
+Build the Samora Lang executable:
+```
+go build -o samora main.go
+```
+
+Move the executable to a directory in your PATH, or manually add it to your PATH (this is optional, as you can always call the executable from its source directory):
+
+```bash
+sudo mv samora /usr/local/bin/
+```
+
+Once this is done, you can reload your terminal profile, or restart your instance (window) of `bash` or `zsh`.
 
 2. Write your Samora Lang code in a text editor or an integrated development environment (IDE).
-3. Save your Samora Lang code with a `.sml` extension.
 
-## Hello, World!
-
-To familiarize yourself with Samora Lang, here's a "Hello, World!" example:
-
-```sml
+```javascript
 print("Hello, World!");
 ```
 
+3. Save your Samora Lang code with a `main.sml` extension, and run it using the following command:
+
+```bash
+samora main.sml ## You will get a result similar to; `Hello, World!`.
+```
+
 ## Read a file from the filesystem
-```sml
+```javascript
 let content = readFile("file.txt")
 println(content)
 ```
 ## Write data to a file
-```sml
+```javascript
 let data = "This is some content"
 writeFile("file.txt", data)
 ```
 ## Delete a file
-```sml
+```javascript
 deleteFile("file.txt")
 ```
 
 ## Create Directory
-```sml
+```javascript
 makeDir("path")
 ```
 ## Language Features
@@ -68,7 +100,7 @@ Here are some examples to illustrate the usage of Samora Lang's features:
 
 ### Recursive Factorial Function
 
-```sml
+```javascript
 let factorial = fn(n) {
   if (n == 0) {
     1;
@@ -85,7 +117,7 @@ In this example, the `factorial` function calculates the factorial of a given nu
 
 ### Closure Example
 
-```
+```javascript
 let adder = fn(x) {
   fn(y) {
     x + y;
@@ -101,13 +133,13 @@ In this example, the `adder` function returns a closure that adds the provided v
 
 ### Single-line Comments Example
 
-```sml
+```javascript
 // This is a single-line comment.
 # This is also a single-line comment.
 ```
 ### Array Example
 
-```sml
+```javascript
 let numbers = [1, 2, 3, 4, 5];
 print(numbers[2]); 
 ```
@@ -116,7 +148,7 @@ In this example, an array `numbers` is created, and its third element (index 2) 
 
 ### Hash (Dictionary) Example
 
-```sml
+```javascript
 let person = {"name": "John", "age": 25};
 print(person["name"]);
 ```
@@ -124,7 +156,7 @@ print(person["name"]);
 In this example, a hash `person` is created with keys `"name"` and `"age"`. The value corresponding to the key `"name"` is accessed and printed.
 
 ### Map and Reduce Example
-    ```sml
+    ```javascript
     let numbers = [1, 2, 3, 4, 5];
     let squared = map(numbers, fn(x) { x * x });
     let sum = reduce(squared, fn(acc, x) { acc + x }, 0);
